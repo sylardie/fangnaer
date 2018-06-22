@@ -57,6 +57,6 @@ class WeChatAuthTokenViewSet(viewsets.ViewSet):
             return Response({'token': token.key})
         return Response({'error': "登陆失败！"})
 
-    @decorators.action(methods=['post'], detail=False)
+    @decorators.action(methods=['post'], detail=True)
     def logout(self, request, *args, **kwargs):
         pass

@@ -13,11 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include, static
+from django.conf.urls import url, include
 from django.contrib import admin
-from users.views import WeChatAuthTokenViewSet,WeChatUserViewSet
 from rest_framework import routers
-from django.conf import settings
+
+from users.views import WeChatAuthTokenViewSet
+
 router = routers.DefaultRouter()
 router.register(r'wechat', WeChatAuthTokenViewSet,base_name='wechat')
 
