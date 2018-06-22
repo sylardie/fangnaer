@@ -1,0 +1,24 @@
+<template>
+  
+</template>
+<script>
+import wepy from 'wepy';
+
+export default class My extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的'
+  };
+
+  mixins = [];
+
+  data = {}
+
+  computed = {};
+
+  methods = {};
+
+  events = {};
+
+  onLoad() {}
+}
+</script>

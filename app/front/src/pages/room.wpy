@@ -1,0 +1,24 @@
+<template>
+  
+</template>
+<script>
+import wepy from 'wepy';
+
+export default class Room extends wepy.page {
+  config = {
+    navigationBarTitleText: '房间'
+  };
+
+  mixins = [];
+
+  data = {}
+
+  computed = {};
+
+  methods = {};
+
+  events = {};
+
+  onLoad() {}
+}
+</script>
