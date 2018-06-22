@@ -13,22 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include, static
-from django.contrib import admin
-from users.views import WeChatAuthTokenViewSet,WeChatUserViewSet
-from rest_framework import routers
-from django.conf import settings
-router = routers.DefaultRouter()
-router.register(r'wechat', WeChatAuthTokenViewSet,base_name='wechat')
-
-from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
 
-urlpatterns += [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
