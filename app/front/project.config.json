@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
@@ -9,7 +9,7 @@
 	},
 	"compileType": "miniprogram",
 	"appid": "wxc0b94222c8840cba",
-	"projectname": "fangnaer",
+	"projectname": "%E6%94%BE%E5%93%AA%E5%84%BF",
 	"miniprogramRoot": "./dist",
 	"condition": {}
 }

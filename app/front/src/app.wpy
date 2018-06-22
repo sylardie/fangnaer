@@ -1,69 +1,55 @@
-<style lang="less">
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-</style>
-
 <script>
-import wepy from 'wepy'
-import 'wepy-async-function'
+import wepy from 'wepy';
+import 'wepy-async-function';
 
 export default class extends wepy.app {
   config = {
-    pages: [
-      'pages/index'
-    ],
+    pages: ['pages/index', 'pages/room', 'pages/my'],
     window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarBackgroundColor: '#796ffb',
+      navigationBarTitleText: '放哪儿',
+      navigationBarTextStyle: '#fff',
+      backgroundColor: '#f3f3f3',
+      backgroundTextStyle: 'light'
+    },
+    tabBar: {
+      color: '#333333',
+      selectedColor: '#796ffb',
+      backgroundColor: '#ffffff',
+      borderStyle: 'black',
+      list: [
+        {
+          pagePath: 'pages/index',
+          text: '首页',
+          iconPath: 'assets/icon/home.png',
+          selectedIconPath: 'assets/icon/home_selected.png'
+        },
+        {
+          pagePath: 'pages/room',
+          text: '房间',
+          iconPath: 'assets/icon/room.png',
+          selectedIconPath: 'assets/icon/room_selected.png'
+        },
+        {
+          pagePath: 'pages/my',
+          text: '我的',
+          iconPath: 'assets/icon/my.png',
+          selectedIconPath: 'assets/icon/my_selected.png'
+        }
+      ]
     }
-  }
+  };
 
   globalData = {
     userInfo: null
+  };
+
+  constructor() {
+    super();
+    this.use('requestfix');
+    this.use('promisify');
   }
 
-  constructor () {
-    super()
-    this.use('requestfix')
-    this.use('promisify')
-  }
-
-  onLaunch() {
-    this.testAsync()
-  }
-
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
-
-  async testAsync () {
-    const data = await this.sleep(3)
-    console.log(data)
-  }
-
-  getUserInfo(cb) {
-    const that = this
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
-      }
-    })
-  }
+  onLaunch() {}
 }
 </script>
