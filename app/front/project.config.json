@@ -11,5 +11,6 @@
 	"appid": "wxc0b94222c8840cba",
 	"projectname": "%E6%94%BE%E5%93%AA%E5%84%BF",
 	"miniprogramRoot": "./dist",
+	"libVersion": "2.1.0",
 	"condition": {}
 }
