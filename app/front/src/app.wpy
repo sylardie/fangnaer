@@ -1,55 +1,56 @@
 <script>
-import wepy from 'wepy';
-import 'wepy-async-function';
-
-export default class extends wepy.app {
-  config = {
-    pages: ['pages/index', 'pages/room', 'pages/my'],
-    window: {
-      navigationBarBackgroundColor: '#796ffb',
-      navigationBarTitleText: '放哪儿',
-      navigationBarTextStyle: '#fff',
-      backgroundColor: '#f3f3f3',
-      backgroundTextStyle: 'light'
-    },
-    tabBar: {
-      color: '#333333',
-      selectedColor: '#796ffb',
-      backgroundColor: '#ffffff',
-      borderStyle: 'black',
-      list: [
-        {
-          pagePath: 'pages/index',
-          text: '首页',
-          iconPath: 'assets/icon/home.png',
-          selectedIconPath: 'assets/icon/home_selected.png'
-        },
-        {
-          pagePath: 'pages/room',
-          text: '房间',
-          iconPath: 'assets/icon/room.png',
-          selectedIconPath: 'assets/icon/room_selected.png'
-        },
-        {
-          pagePath: 'pages/my',
-          text: '我的',
-          iconPath: 'assets/icon/my.png',
-          selectedIconPath: 'assets/icon/my_selected.png'
-        }
-      ]
+  import wepy from 'wepy';
+  import 'wepy-async-function';
+  export default class extends wepy.app {
+    config = {
+      pages: ['pages/index', 'pages/room', 'pages/my'],
+      window: {
+        navigationBarBackgroundColor: '#796ffb',
+        navigationBarTitleText: '放哪儿',
+        navigationBarTextStyle: '#fff',
+        backgroundColor: '#f3f3f3',
+        backgroundTextStyle: 'light'
+      },
+      tabBar: {
+        color: '#333333',
+        selectedColor: '#796ffb',
+        backgroundColor: '#ffffff',
+        borderStyle: 'black',
+        list: [{
+            pagePath: 'pages/index',
+            text: '首页',
+            iconPath: 'assets/icon/home.png',
+            selectedIconPath: 'assets/icon/home_selected.png'
+          },
+          {
+            pagePath: 'pages/room',
+            text: '房间',
+            iconPath: 'assets/icon/room.png',
+            selectedIconPath: 'assets/icon/room_selected.png'
+          },
+          {
+            pagePath: 'pages/my',
+            text: '我的',
+            iconPath: 'assets/icon/my.png',
+            selectedIconPath: 'assets/icon/my_selected.png'
+          }
+        ]
+      }
+    };
+    globalData = {
+      userInfo: null
+    };
+    constructor() {
+      super();
+      this.use('requestfix');
+      this.use('promisify');
     }
-  };
-
-  globalData = {
-    userInfo: null
-  };
-
-  constructor() {
-    super();
-    this.use('requestfix');
-    this.use('promisify');
+    onLaunch() {
+      wepy.login().then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.error(err);
+      });
+    }
   }
-
-  onLaunch() {}
-}
 </script>
