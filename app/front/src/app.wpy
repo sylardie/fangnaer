@@ -18,9 +18,6 @@
   .fz22 {
     font-size: 22rpx;
   }
-  .mb {
-    margin-bottom: 40rpx;
-  }
 </style>
 
 <script>
