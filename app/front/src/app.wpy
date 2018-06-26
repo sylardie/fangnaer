@@ -1,9 +1,35 @@
+<style lang="less">
+  view,
+  text {
+    box-sizing: border-box;
+  }
+  page {
+    background-color: #f3f3f3;
+  }
+  .text-gray {
+    color: #999999;
+  }
+  .text-black {
+    color: #333333;
+  }
+  .fz40 {
+    font-size: 40rpx;
+  }
+  .fz22 {
+    font-size: 22rpx;
+  }
+  .mb {
+    margin-bottom: 40rpx;
+  }
+</style>
+
 <script>
   import wepy from 'wepy';
   import 'wepy-async-function';
+  import http from './util/http';
   export default class extends wepy.app {
     config = {
-      pages: ['pages/index', 'pages/room', 'pages/my'],
+      pages: ['pages/index', 'pages/room', 'pages/my', 'pages/goods/add'],
       window: {
         navigationBarBackgroundColor: '#796ffb',
         navigationBarTitleText: '放哪儿',
@@ -47,6 +73,14 @@
     }
     onLaunch() {
       wepy.login().then(res => {
+        http.post({
+          router: 'login',
+          data: {
+            code: res.code
+          }
+        }).then((res) => {
+          console.log(res);
+        }).catch((err) => {});
         console.log(res);
       }).catch(err => {
         console.error(err);

@@ -1,7 +1,7 @@
 {
 	"description": "A WePY project",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
@@ -12,5 +12,31 @@
 	"projectname": "%E6%94%BE%E5%93%AA%E5%84%BF",
 	"miniprogramRoot": "./dist",
 	"libVersion": "2.1.0",
-	"condition": {}
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "添加物品",
+					"pathName": "pages/goods/add"
+				}
+			]
+		}
+	}
 }

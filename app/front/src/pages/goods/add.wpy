@@ -1,0 +1,43 @@
+<style lang="less">
+  .goods-add {
+    padding: 40rpx 28rpx;
+  }
+  .part {
+    margin-bottom: 30rpx;
+    border: 1px solid #e5e5e5;
+    background-color: #ffffff;
+    &.audio {
+      border-radius: 20rpx;
+      height: 120rpx;
+    }
+  }
+</style>
+
+<template>
+  <view class="goods-add">
+    <view class="text-black fz40">港澳台通行证</view>
+    <view class="text-gray fz22">创建时间：2018/6/22 11:47</view>
+    <view class="part audio">
+      <view class="item">
+        <view></view>
+      </view>
+    </view>
+    <view class="part image"></view>
+    <view class="part text">港澳台通行证放在我主卧的抽屉里...</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  export default class GoodsAdd extends wepy.page {
+    config = {
+      navigationBarTitleText: '物品',
+    };
+    mixins = [];
+    data = {};
+    computed = {};
+    methods = {};
+    events = {};
+    onLoad() {}
+  }
+</script>

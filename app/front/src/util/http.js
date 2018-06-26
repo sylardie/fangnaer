@@ -79,9 +79,7 @@ function parseResult (res, type) {
  */
 function getHeader (type, header) {
   return new Promise((resolve, reject) => {
-    let newHeader = {
-      'pipetype': 'applet'
-    }
+    let newHeader = {}
 
     switch (type) {
       case 'GET':

@@ -1,5 +1,5 @@
 const baseUrl = 'https://api.fangnaer.top'
-const baseRouter = ''
+const baseRouter = 'wechat'
 
 export {
   baseUrl,
