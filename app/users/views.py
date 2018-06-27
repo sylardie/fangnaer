@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
@@ -32,30 +33,33 @@ class WeChatAuthTokenViewSet(viewsets.ViewSet):
     """
     微信认证
     """
-    def list(self, request):
-        return Response('post /wechat/login -  post /wechat/logout')
+    # def list(self, request):
+    #     return Response('post /wechat/login -  post /wechat/logout')
 
-    @decorators.action(methods=['post'], detail=False)
+    @decorators.action(methods=['POST'], detail=False)
     def login(self, request, *args, **kwargs):
-        print('666666666666')
         req_data = request.data
         wx_req_data = urlencode({
-            "appid": "*",
+            "appid": "wxc0b94222c8840cba",
             "secret": "*",
-            "js_code": req_data['wx_code'],
+            "js_code": req_data['code'],
             "grant_type": "authorization_code"
         })
         wx_request = requests.post(url="https://api.weixin.qq.com/sns/jscode2session", data=wx_req_data)
         wx_session = wx_request.text
-        wx_session_reslut = WeChatOpenIdSerializer(data=json.loads(wx_session.read()))
-        if wx_session_reslut.is_valid():
-            openid = wx_session_reslut.data['openid']
+        wx_session_reslut = json.loads(wx_session)
+        response = {}
+        if wx_session_reslut:
+            openid = wx_session_reslut['openid']
             user, status = User.objects.get_or_create(username=openid)
-            wechat_user, status = WeChatUser.objects.get_or_create(user=user,
-                                                                   openid=openid)
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key})
-        return Response({'error': "登陆失败！"})
+            wechat_user, status = WeChatUser.objects.get_or_create(user=user,openid=openid)
+            # token, created = Token.objects.get_or_create(user=user)
+            response['openid'] = openid
+            response['message'] = 'success'
+            return JsonResponse(response)
+        else:
+            response['message'] = '登录失败'
+            return Response(response)
 
     @decorators.action(methods=['post'], detail=True)
     def logout(self, request, *args, **kwargs):
