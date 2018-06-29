@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
-
+from myapp.views import ssl_verify
 from users.views import WeChatAuthTokenViewSet
 
 router = routers.DefaultRouter()
@@ -26,6 +26,7 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('.well-known/pki-validation/fileauth.txt', ssl_verify)
 ]
 
 urlpatterns += [
