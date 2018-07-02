@@ -1,38 +1,123 @@
 <style lang="less">
   @import '../../common';
   .goods-add {
-    padding: 40rpx 28rpx;
-  }
-  .time {
-    margin-bottom: 40rpx;
-  }
-  .part {
-    margin-bottom: 30rpx;
-    border: 1px solid #e5e5e5;
-    background-color: #ffffff;
-    &.audio {
+    padding: 40rpx 28rpx 0 28rpx;
+    >.time {
+      margin-bottom: 40rpx;
+    }
+    .show {
+      margin-bottom: 130rpx;
+      >.part+.part {
+        margin-top: 30rpx;
+      }
+      >.part {
+        &.audio .item {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-left: 30rpx;
+          margin-left: 20rpx;
+          border-radius: 40rpx;
+          border: 1px solid #e5e5e5;
+          background-color: #ffffff;
+          height: 120rpx;
+          margin-bottom: 20rpx;
+          &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -19rpx;
+            height: 28rpx;
+            width: 20rpx;
+            transform: translateY(-50%);
+            background: url(https://s33.postimg.cc/t20uju6db/arraw.png) no-repeat center / 20rpx 28rpx;
+          }
+          .btn {
+            position: relative;
+            width: 70rpx;
+            height: 70rpx;
+            border-radius: 50%;
+            background-color: @color-primary;
+            background-repeat: no-repeat;
+            background-position: center;
+            &.play {
+              background-image: url('https://s33.postimg.cc/cygffmvkf/play_bg.png');
+              background-size: 20rpx 26rpx;
+            }
+            &.pause {
+              background-image: url('https://s22.postimg.cc/lf6jd3c8x/pause_bg.png');
+              background-size: 20rpx 30rpx;
+            }
+          }
+          .time {
+            margin-right: 30rpx;
+            color: #333333;
+          }
+        }
+        &.image .item {
+          position: relative;
+          border: 1px solid #e5e5e5;
+          width: 690rpx;
+          height: 690rpx;
+          margin-bottom: 20rpx;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+        .close-btn {
+          position: absolute;
+          top: -10rpx;
+          right: -10rpx;
+          width: 42rpx;
+          height: 42rpx;
+          background-color: #dfdfdf;
+          border-radius: 50%;
+          &::before,
+          &::after {
+            content: '';
+            position: absolute;
+            height: 26rpx;
+            border: 2rpx solid #fff;
+            top: 50%;
+            left: 50%;
+          }
+          &::before {
+            transform: translate(-50%, -50%) rotate(-45deg);
+          }
+          &::after {
+            transform: translate(-50%, -50%) rotate(45deg);
+          }
+        }
+      }
+    }
+    .operation-area {
+      position: fixed;
       display: flex;
       align-items: center;
-      padding-left: 20rpx;
-      border-radius: 20rpx;
-      height: 120rpx;
+      justify-content: space-between;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 50rpx;
+      height: 100rpx;
+      border-top: 1px solid #e5e5e5;
+      background-color: #ffffff;
       .btn {
-        position: relative;
-        width: 70rpx;
-        height: 70rpx;
-        border-radius: 50%;
-        background-color: @color-primary;
-        background-repeat: no-repeat;
+        height: 47rpx;
+        width: 47rpx;
         background-position: center;
-        
-        &.play {
-          background-image: url('https://s33.postimg.cc/cygffmvkf/play_bg.png');
-          background-size: 20rpx 26rpx;
-        }
-        &.pause {
-          background-image: url('https://s22.postimg.cc/lf6jd3c8x/pause_bg.png');
-          background-size: 20rpx 30rpx;
-        }
+        background-repeat: no-repeat;
+        background-size: 47rpx;
+      }
+      .del {
+        background-image: url(https://s33.postimg.cc/5tonawku7/del.png)
+      }
+      .add {
+        background-image: url(https://s33.postimg.cc/jnczzy5pr/add.png)
+      }
+      .ok {
+        background-image: url(https://s33.postimg.cc/txfez7b0v/image.png)
       }
     }
   }
@@ -42,13 +127,34 @@
   <view class="goods-add">
     <view class="text-black fz40">港澳台通行证</view>
     <view class="time text-gray fz22">创建时间：2018/6/22 11:47</view>
-    <view class="part audio">
-      <view class="item">
-        <view class="btn play"></view>
+    <view class="show">
+      <view class="part audio">
+        <view class="item">
+          <view class="btn play"></view>
+          <view class="time fz22">20:50</view>
+          <view class="close-btn"></view>
+        </view>
+        <view class="item">
+          <view class="btn play"></view>
+          <view class="time fz22">20:50</view>
+          <view class="close-btn"></view>
+        </view>
       </view>
+      <view class="part image">
+        <view class="item" style="background-image:url(https://s33.postimg.cc/s3p2usxpb/temp.jpg)">
+          <view class="close-btn"></view>
+        </view>
+        <view class="item" style="background-image:url(https://s33.postimg.cc/s3p2usxpb/temp.jpg)">
+          <view class="close-btn"></view>
+        </view>
+      </view>
+      <view class="part text">港澳台通行证放在我主卧的抽屉里...</view>
     </view>
-    <view class="part image"></view>
-    <view class="part text">港澳台通行证放在我主卧的抽屉里...</view>
+    <view class="operation-area">
+      <view class="btn del"></view>
+      <view class="btn add"></view>
+      <view class="btn ok"></view>
+    </view>
   </view>
 </template>
 
