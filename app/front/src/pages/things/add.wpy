@@ -160,7 +160,7 @@
 
 <script>
   import wepy from 'wepy';
-  export default class GoodsAdd extends wepy.page {
+  export default class ThingsAdd extends wepy.page {
     config = {
       navigationBarTitleText: '物品',
     };
