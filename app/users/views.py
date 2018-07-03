@@ -39,24 +39,29 @@ class WeChatAuthTokenViewSet(viewsets.ViewSet):
     @decorators.action(methods=['POST'], detail=False)
     def login(self, request, *args, **kwargs):
         req_data = request.data
+        print('*'*100)
+        print(req_data)
+        print('*'*100)
         wx_req_data = urlencode({
             "appid": "wxc0b94222c8840cba",
-            "secret": "*",
+            "secret": "f62b449568e2a8d07fd0728dfcbaf6b5",
             "js_code": req_data['code'],
             "grant_type": "authorization_code"
         })
         wx_request = requests.post(url="https://api.weixin.qq.com/sns/jscode2session", data=wx_req_data)
         wx_session = wx_request.text
-        wx_session_reslut = json.loads(wx_session)
+        # print(json.loads(wx_session))
+        wx_session_reslut = WeChatOpenIdSerializer(data=json.loads(wx_session))
+        print(wx_session_reslut)
         response = {}
-        if wx_session_reslut:
-            openid = wx_session_reslut['openid']
+        if wx_session_reslut.is_valid():
+            openid = wx_session_reslut.data['openid']
             user, status = User.objects.get_or_create(username=openid)
             wechat_user, status = WeChatUser.objects.get_or_create(user=user,openid=openid)
-            # token, created = Token.objects.get_or_create(user=user)
-            response['openid'] = openid
+            token, created = Token.objects.get_or_create(user=user)
+            response['token'] = token.key
             response['message'] = 'success'
-            return JsonResponse(response)
+            return Response(response)
         else:
             response['message'] = '登录失败'
             return Response(response)
