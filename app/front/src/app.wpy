@@ -1,6 +1,7 @@
 <style lang="less">
   view,
-  text {
+  text,
+  input {
     box-sizing: border-box;
   }
   page {
@@ -26,7 +27,7 @@
   import http from './util/http';
   export default class extends wepy.app {
     config = {
-      pages: ['pages/index', 'pages/room', 'pages/my', 'pages/goods/add'],
+      pages: ['pages/index', 'pages/room', 'pages/my', 'pages/things/add'],
       window: {
         navigationBarBackgroundColor: '#796ffb',
         navigationBarTitleText: '放哪儿',
@@ -77,8 +78,9 @@
           }
         }).then((res) => {
           console.log(res);
-        }).catch((err) => {});
-        console.log(res);
+        }).catch((err) => {
+          console.error(err);
+        });
       }).catch(err => {
         console.error(err);
       });
