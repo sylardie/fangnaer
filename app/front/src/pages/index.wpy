@@ -1,24 +1,303 @@
+<style lang="less">
+  @import url('../common');
+  @border-radius: 30rpx;
+  .index {
+    width: 100%;
+    overflow: hidden;
+    .search {
+      display: flex;
+      align-items: center;
+      height: 110rpx;
+      padding: 0 30rpx;
+      background-color: @color-primary;
+      input {
+        position: relative;
+        flex: 1;
+        height: 70rpx;
+        background-color: #ffffff;
+        border-radius: 70rpx;
+        padding: 0 30rpx 0 80rpx;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 24rpx;
+          top: 50%;
+          width: 34rpx;
+          height: 34rpx;
+          background: url(https://s33.postimg.cc/wihbc2gpr/search_btn.png) no-repeat center / 34rpx 34rpx;
+          transform: translateY(-50%);
+        }
+      }
+      .btn {
+        position: relative;
+        width: 70rpx;
+        height: 70rpx;
+        margin-left: 20px;
+        border-radius: 50%;
+        background-color: #fff;
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          height: 34rpx;
+          border: 2rpx solid @color-primary;
+          top: 50%;
+          left: 50%;
+        }
+        &::before {
+          transform: translate(-50%, -50%) rotate(-45deg);
+        }
+        &::after {
+          transform: translate(-50%, -50%) rotate(45deg);
+        }
+      }
+    }
+    .main {
+      margin-top: 40rpx;
+      .room {
+        margin-bottom: 40rpx;
+        >.info {
+          display: flex;
+          padding: 0 30rpx;
+          align-items: center;
+          .room-name {
+            position: relative;
+            font-size: 40rpx;
+            color: @color-primary;
+            font-weight: bold;
+            padding-right: 50rpx;
+            margin-bottom: 30rpx;
+            &.close::before {
+              content: '';
+              position: absolute;
+              right: 6rpx;
+              top: 18rpx;
+              width: 15rpx;
+              height: 15rpx;
+              border-right: 4rpx solid @color-primary;
+              border-top: 4rpx solid @color-primary;
+              transform: rotate(135deg);
+            }
+            &.open::before {
+              content: '';
+              position: absolute;
+              right: 6rpx;
+              top: 26rpx;
+              width: 15rpx;
+              height: 15rpx;
+              border-right: 4rpx solid @color-primary;
+              border-top: 4rpx solid @color-primary;
+              transform: rotate(-45deg);
+            }
+          }
+          .count {
+            flex: 1;
+            color: #999999;
+            font-size: 26rpx;
+            text-align: right;
+          }
+        }
+        >.things-box {
+          position: relative;
+          .things {
+            display: flex;
+            align-items: center;
+            padding: 24rpx;
+            margin: 0 30rpx;
+            border-radius: @border-radius;
+            background-color: #ffffff;
+            .img {
+              width: 120rpx;
+              height: 120rpx;
+              border-radius: @border-radius;
+              margin-right: 30rpx;
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+            }
+            .info {
+              flex: 1;
+              view {
+                font-size: 28rpx;
+                color: #666666;
+                line-height: 40rpx;
+              }
+            }
+            .view {
+              width: 120rpx;
+              height: 60rpx;
+              border: 2rpx solid @color-primary;
+              color: @color-primary;
+              text-align: center;
+              line-height: 60rpx;
+              border-radius: @border-radius;
+              font-size: 26rpx;
+            }
+          }
+          .del {
+            position: absolute;
+            right: -100%;
+            top: 0;
+            height: 168rpx;
+            width: 100rpx;
+            background-color: @color-primary;
+            text-align: center;
+            line-height: 168rpx;
+            color: #ffffff;
+            font-size: 26rpx;
+            border-radius: @border-radius 0 0 @border-radius;
+          }
+        }
+        >.more {
+          height: 60rpx;
+          width: 180rpx;
+          margin: 20rpx auto 0 auto;
+          border-radius: @border-radius;
+          background-color: @color-primary;
+          font-size: 26rpx;
+          color: #ffffff;
+          text-align: center;
+          line-height: 60rpx;
+        }
+      }
+    }
+  }
+</style>
+
 <template>
-  
+  <view class="index">
+    <view class="search">
+      <input type="text" placeholder="搜索房间名、物品名" placeholder-style="color:#999">
+      <view class="btn"></view>
+    </view>
+    <view class="main">
+      <view class="room">
+        <view class="info">
+          <view class="room-name open">Aimee的房间</view>
+          <view class="count">3件物品</view>
+        </view>
+        <view class="things-box" bind:touchstart="drawStart" bind:touchmove="drawMove" bind:touchend="drawEnd">
+          <view class="things">
+            <view class="img" style="background-image:url(https://s33.postimg.cc/s3p2usxpb/temp.jpg)"></view>
+            <view class="info">
+              <view class="title">木九十粉色墨镜</view>
+              <view class="time">2018/06/22 14:02</view>
+            </view>
+            <view class="view">查看</view>
+          </view>
+          <view class="del">删除</view>
+        </view>
+        <view class="more">查看全部</view>
+      </view>
+      <view class="room">
+        <view class="info">
+          <view class="room-name open">Aimee的房间</view>
+          <view class="count">3件物品</view>
+        </view>
+        <view class="things-box" bind:touchstart="drawStart" bind:touchmove="drawMove" bind:touchend="drawEnd">
+          <view class="things">
+            <view class="img" style="background-image:url(https://s33.postimg.cc/s3p2usxpb/temp.jpg)"></view>
+            <view class="info">
+              <view class="title">木九十粉色墨镜</view>
+              <view class="time">2018/06/22 14:02</view>
+            </view>
+            <view class="view">查看</view>
+          </view>
+          <view class="del">删除</view>
+        </view>
+        <view class="more">查看全部</view>
+      </view>
+    </view>
+    <navigator url="/pages/things/add">点我</navigator>
+  </view>
 </template>
+
 <script>
-import wepy from 'wepy';
-
-export default class Index extends wepy.page {
-  config = {
-    navigationBarTitleText: '首页',
-  };
-
-  mixins = [];
-
-  data = {};
-
-  computed = {};
-
-  methods = {};
-
-  events = {};
-
-  onLoad() {}
-}
+  import wepy from 'wepy';
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '首页',
+    };
+    mixins = [];
+    data = {};
+    computed = {};
+    methods = {
+      drawStart(e) {
+        console.log("drawStart");
+        var touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        var cardTeams = this.data.cardTeams;
+        for (var i in cardTeams) {
+          var data = cardTeams[i];
+          data.startRight = data.right;
+        }
+        key = true;
+      },
+      drawEnd(e) {
+        console.log("drawEnd");
+        var cardTeams = this.data.cardTeams;
+        for (var i in cardTeams) {
+          var data = cardTeams[i];
+          if (data.right <= 100 / 2) {
+            data.right = 0;
+          } else {
+            data.right = maxRight;
+          }
+        }
+        this.setData({
+          cardTeams: cardTeams
+        });
+      },
+      drawMove(e) {
+        console.log("drawMove");
+        var self = this;
+        var dataId = e.currentTarget.id;
+        var cardTeams = this.data.cardTeams;
+        if (key) {
+          var touch = e.touches[0];
+          endX = touch.clientX;
+          endY = touch.clientY;
+          console.log("startX=" + startX + " endX=" + endX);
+          if (endX - startX == 0)
+            return;
+          var res = cardTeams;
+          //从右往左
+          if ((endX - startX) < 0) {
+            for (var k in res) {
+              var data = res[k];
+              if (res[k].id == dataId) {
+                var startRight = res[k].startRight;
+                var change = startX - endX;
+                startRight += change;
+                if (startRight > maxRight)
+                  startRight = maxRight;
+                res[k].right = startRight;
+              }
+            }
+          } else { //从左往右
+            for (var k in res) {
+              var data = res[k];
+              if (res[k].id == dataId) {
+                var startRight = res[k].startRight;
+                var change = endX - startX;
+                startRight -= change;
+                if (startRight < 0)
+                  startRight = 0;
+                res[k].right = startRight;
+              }
+            }
+          }
+          self.setData({
+            cardTeams: cardTeams
+          });
+        }
+      }
+    };
+    events = {};
+    onLoad() {}
+    onShareAppMessage() {
+      return {}
+    }
+  }
 </script>
