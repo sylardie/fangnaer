@@ -4,7 +4,7 @@ from users.models import WeChatUser
 class WeChatOpenIdSerializer(serializers.Serializer):
    openid = serializers.CharField()
    session_key = serializers.CharField()
-   expires_in = serializers.IntegerField()
+   # expires_in = serializers.IntegerField()
 
 
 class WeChatUserSerializer(serializers.ModelSerializer):
