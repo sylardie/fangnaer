@@ -9,6 +9,13 @@ djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
 requests = "*"
+djangorestframework-jwt = "*"
+django-cors-headers = "*"
+python-weixin = "*"
+crypto = "*"
+pycryptodome = "*"
+pymysql = "*"
+pillow = "*"
 
 [dev-packages]
 
