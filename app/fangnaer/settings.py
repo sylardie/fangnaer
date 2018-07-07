@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!!@=hmv+)6$*=lwa#$1+@dg-0_md5l258utn&pe*-%$uwh=kf)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,43 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
+    'sslserver',
     'rest_framework',
     'rest_framework.authtoken',
-    'backend.myapp',
-    'backend.users',
+    'myapp',
+    'users',
 ]
-
-# django-rest-framework设置
-REST_FRAMEWORK = {
-    'PAGE_SIZE': 10,
-
-    # # 设置所有接口都需要被验证
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-}
-
-import datetime
-JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
-}
-
-CORS_ORIGIN_WHITELIST = (
-    '127.0.0.1:8000',# 请求的域名
-    'localhost:8000',
-    'localhost',
-)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -109,10 +82,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fangnaer',
-        'USER': 'root',         # 数据库用户名
-        'PASSWORD': 'mysql',     # 密码
-        'HOST': 'localhost',    # 主机
-        'PORT': '3306',         # 数据库使用的端口'
+        'USER': 'root',
+        'PASSWORD': 'mysql',
+        'HOST': '127.0.0.1',
+        'PORT': 3306
     }
 }
 
@@ -154,6 +127,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')
-MEDIA_URL = '/upload/' # 这个是在浏览器上访问该上传文件的url的前缀
