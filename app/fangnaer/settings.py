@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!!@=hmv+)6$*=lwa#$1+@dg-0_md5l258utn&pe*-%$uwh=kf)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,11 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sslserver',
     'rest_framework',
     'rest_framework.authtoken',
-    'myapp',
-    'users',
+    'backend.myapp',
+    'backend.users',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# upload_to 字段上传的目录位置
+# MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')

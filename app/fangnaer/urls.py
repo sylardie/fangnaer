@@ -19,10 +19,12 @@ from rest_framework import routers
 from backend.users.views import WeChatAuthTokenViewSet
 from rest_framework_jwt.views import obtain_jwt_token
 from backend.myapp.views import ThingsViewSet
+from backend.myapp.views import show_media
 
 router = routers.DefaultRouter()
 router.register(r'wechat', WeChatAuthTokenViewSet,base_name='wechat')
 router.register(r'v1', ThingsViewSet, base_name='v1')
+
 
 from django.urls import path
 
@@ -32,6 +34,7 @@ urlpatterns = [
 
 urlpatterns += [
     url(r'^', include(router.urls)),
-    url(r'^api-token-auth/', obtain_jwt_token),
+    # url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^media/(?P<path_root>.*)$', show_media)
 ]

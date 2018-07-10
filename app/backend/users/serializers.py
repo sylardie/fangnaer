@@ -14,4 +14,4 @@ class WeChatUserSerializer(serializers.ModelSerializer):
        model = WeChatUser
        fields = ('__all__')
        # fields = ('nick_name', 'avatar_url', 'gender', 'city', 'province', 'country', 'language')
-       read_only_fields = ('openid', 'user')
+       # read_only_fields = ('openid', 'user')
