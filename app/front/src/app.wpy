@@ -71,6 +71,7 @@
     }
     onLaunch() {
       wepy.login().then(res => {
+        console.log(res);
         http.post({
           router: 'login/',
           data: {
