@@ -6,12 +6,15 @@ from rest_framework.response import Response
 from backend.myapp.models import Things
 from backend.myapp.serializers import ThingsSerializer
 from django.core.paginator import Paginator ,PageNotAnInteger ,EmptyPage
+import redis
+
+user_redis = redis.StrictRedis.from_url('redis//localhost:6379')
 
 
 class ThingsViewSet(viewsets.ViewSet):
 	serializer_class = ThingsSerializer
 
-	@decorators.action(methods=['GET','POST', 'PATCH', 'DELETE'], detail=False)
+	@decorators.action(methods=['GET', 'POST', 'PATCH', 'DELETE'], detail=False)
 	def thing(self, request, *args, **kwargs):
 		# 新增
 		response = {}
@@ -20,25 +23,28 @@ class ThingsViewSet(viewsets.ViewSet):
 				response['msg'] = 'create_success'
 				return JsonResponse(response)
 			else:
-				response['msg'] = 'create_fail'
+				response['msg'] = '用户未授权'
 				response['err_num'] = 0000
 				return JsonResponse(response)
 		# 查询
 		elif request.method == 'GET':
 			# 用request.META可以获取所有请求数据。根据需求提取。
 			# print(request.META.keys())
-			ret, page = self.filter(request)
-			if ret:
-				response['things_count'] = len(ret)
-				response['list'] = ret
-				response['msg'] = 'success'
-				response['current_page'] = page
-				return JsonResponse(response)
-			else:
-				response['things_count'] = len(ret)
-				response['msg'] = 'success'
-				response['list'] = []
-				return JsonResponse(response)
+			if self.filter(request):
+				ret, page = self.filter(request)
+				if ret:
+					response['things_count'] = len(ret)
+					response['list'] = ret
+					response['msg'] = 'success'
+					response['current_page'] = page
+					return JsonResponse(response)
+				else:
+					response['things_count'] = len(ret)
+					response['msg'] = 'success'
+					response['list'] = []
+					return JsonResponse(response)
+			response['msg'] = '未授权用户'
+			return JsonResponse(response)
 		# 删除
 		elif request.method == 'DELETE':
 			if self.dele(request):
@@ -59,17 +65,20 @@ class ThingsViewSet(viewsets.ViewSet):
 				return JsonResponse(response)
 
 	def creator(self, request):
-		user_id = request.META.get('HTTP_AUTHORIZATION')
+		token = request.META.get('HTTP_AUTHORIZATION')
 		picture = request.FILES.get('picture')
 		voice = request.FILES.get('voice')
 		name = request.POST.get('name')
 		home = request.POST.get('home')
 		desc = request.POST.get('desc')
-		if user_id:
+		if user_redis.exists(token):
+			openid = user_redis.hget(token, 'openid')
+			session_key = user_redis.hget(token, 'session_key')
+
 			thing = Things()
 			thing.voice = voice
 			thing.name = name
-			thing.user = user_id
+			thing.user = openid
 			thing.img = picture
 			thing.desc = desc
 			thing.home = home
@@ -79,19 +88,21 @@ class ThingsViewSet(viewsets.ViewSet):
 			return False
 
 	def filter(self, request):
-		user_id = request.META.get('HTTP_AUTHORIZATION')
+		token = request.META.get('HTTP_AUTHORIZATION')
 		name = request.GET.get('name')
 		home = request.GET.get('home')
 		page = request.GET.get('page', 1)
-		if user_id:
+		if user_redis.exists(token):
+			openid = user_redis.hget(token, 'openid')
+			session_key = user_redis.hget(token, 'session_key')
 			if not name and not home:
-				things = Things.objects.filter(user=user_id)
+				things = Things.objects.filter(user=openid)
 			elif name and not home:
-				things = Things.objects.filter(name__icontains=name, user=user_id)
+				things = Things.objects.filter(name__icontains=name, user=openid)
 			elif home and not name:
-				things = Things.objects.filter(home__icontains=home, user=user_id)
+				things = Things.objects.filter(home__icontains=home, user=openid)
 			else:
-				things = Things.objects.filter(user=user_id)
+				things = Things.objects.filter(user=openid)
 
 			paginator = Paginator(things, 5)
 			# 把商品分成 5 个一页。
@@ -108,35 +119,41 @@ class ThingsViewSet(viewsets.ViewSet):
 			return False
 
 	def dele(self, request):
-		user_id = request.META.get('HTTP_AUTHORIZATION')
+		token = request.META.get('HTTP_AUTHORIZATION')
 		home = request.POST.get('home')
 		thing_id = request.POST.get('id')
 		print(thing_id, home)
-		if user_id:
+		if user_redis.exists(token):
+			openid = user_redis.hget(token, 'openid')
+			session_key = user_redis.hget(token, 'session_key')
+
 			if thing_id and not home:
-				ret = Things.objects.filter(user=user_id, pk=thing_id).delete()
+				ret = Things.objects.filter(user=openid, pk=thing_id).delete()
 				print(ret)
 				return True
 			elif home and not thing_id:
-				ret = Things.objects.filter(user=user_id, home=home).delete()
+				ret = Things.objects.filter(user=openid, home=home).delete()
 				print(ret)
 				return True
 			else:
 				return False
 
 	def update(self, request):
-		user_id = request.META.get('HTTP_AUTHORIZATION')
+		token = request.META.get('HTTP_AUTHORIZATION')
 		thing_id = request.POST.get('id')
 		picture = request.FILES.get('picture')
 		voice = request.FILES.get('voice')
 		name = request.POST.get('name')
 		home = request.POST.get('home')
 		desc = request.POST.get('desc')
-		if user_id:
+		if user_redis.exists(token):
+			openid = user_redis.hget(token, 'openid')
+			session_key = user_redis.hget(token, 'session_key')
+
 			thing = Things.objects.get(pk=thing_id)
 			thing.voice = voice
 			thing.name = name
-			thing.user = user_id
+			thing.user = openid
 			thing.img = picture
 			thing.desc = desc
 			thing.home = home
