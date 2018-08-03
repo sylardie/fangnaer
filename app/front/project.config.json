@@ -29,12 +29,12 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 0,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "添加物品",
-					"pathName": "pages/goods/add",
+					"pathName": "pages/things/add",
 					"query": ""
 				}
 			]

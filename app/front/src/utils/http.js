@@ -1,4 +1,4 @@
-import { baseUrl, baseRouter } from '../app-config'
+import { baseUrl, versions } from '../app-config'
 
 /**
  * 解析资源定位参数
@@ -78,7 +78,7 @@ function parseResult (res, type) {
  * @returns
  */
 function getHeader (type, header) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let newHeader = {}
 
     switch (type) {
@@ -90,7 +90,16 @@ function getHeader (type, header) {
         break
     }
 
-    resolve(newHeader)
+    if (header && (header.Authorization === null)) {
+      resolve({ ...newHeader, ...header })
+    } else {
+      let getUserToken = require('./user-info').getUserToken
+      getUserToken().then(token => {
+        newHeader['Authorization'] = token
+      }).finally(() => {
+        resolve({ ...newHeader, ...header })
+      })
+    }
   })
 }
 
@@ -113,7 +122,7 @@ function request (method, {
 }) {
   return new Promise((resolve, reject) => {
     getHeader(method, header).then(header => {
-      let url = parseResource(`${baseUrl}/${baseRouter}/${router}`, resource)
+      let url = parseResource(`${baseUrl}/v${versions}/${router}`, resource)
       query && (url = parseQuery(url, query))
 
       let obj = {

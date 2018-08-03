@@ -160,6 +160,7 @@
 
 <script>
   import wepy from 'wepy';
+  import http from '../../util/http';
   export default class ThingsAdd extends wepy.page {
     config = {
       navigationBarTitleText: '物品',
@@ -167,8 +168,30 @@
     mixins = [];
     data = {};
     computed = {};
-    methods = {};
+    methods = {
+      test() {
+        console.log(123);
+        http.post({
+          router: 'login/',
+          data: {
+            code: res.code
+          }
+        }).then((res) => {
+          console.log(res);
+        }).catch((err) => {
+          console.error(err);
+        });
+      }
+    };
     events = {};
-    onLoad() {}
+    onLoad() {
+      // http.post({
+      //   router: 'thing/'
+      // }).then((res) => {
+      //   console.log(res);
+      // }).catch((err) => {
+      //   console.error(err);
+      // });
+    }
   }
 </script>
