@@ -16,6 +16,7 @@ crypto = "*"
 pycryptodome = "*"
 pymysql = "*"
 pillow = "*"
+redis = "*"
 
 [dev-packages]
 
