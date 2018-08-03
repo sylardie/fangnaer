@@ -8,7 +8,7 @@ import http from './http'
  * @returns
  */
 function getUserToken () {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     registerUser().then(res => resolve(res._token))
   })
 }
